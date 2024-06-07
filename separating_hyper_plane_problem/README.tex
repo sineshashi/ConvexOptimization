@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+\section*{Separating Hyperplane Problem}
+
+\textbf{Statement}
+
+Given a set of data points labeled as positive or negative, find a separating hyperplane that maximizes the margin between the hyperplane and the closest data points. Formulate this problem as a convex optimization problem and explain how it relates to Support Vector Machines (SVMs) for classification.
+
+\subsection*{Mathematical Formulation}
+
+\begin{flushleft}
+Assume $\mathbf{x_i} = (x_1, x_2, \ldots, x_n)$ is the given data vector and $y$ is either $+1$ or $-1$. Let the separating hyperplane be 
+\begin{equation}
+    w^T \mathbf{x} + b = 0
+\end{equation}
+where $w$ is a normal vector to the hyperplane and $b$ is the bias term.
+
+The margin of point $\mathbf{x_i}$ from the hyperplane is given by
+\begin{equation}
+    \frac{|w^T \mathbf{x_i} + b|}{\|w\|}
+\end{equation}
+The margin between the hyperplane and the closest data point is then the minimum of this quantity
+\begin{equation}
+    \min_i \frac{|w^T \mathbf{x_i} + b|}{\|w\|}
+\end{equation}
+
+Thus, we need to maximize
+\begin{equation}
+    \min_i \left(\frac{|w^T \mathbf{x_i} + b|}{\|w\|}\right)
+\end{equation}
+We can choose $w$ and $b$ such that
+\begin{equation}
+    \min_i |w^T \mathbf{x_i} + b| = 1
+\end{equation}
+Since $w^T \mathbf{x} + b = 0$ is the separating plane of the data points based on the labels which have values only $+1$ and $-1$, thus
+\begin{equation}
+    \text{sign}(w^T \mathbf{x_i} + b) = y_i
+\end{equation}
+Hence
+\begin{equation}
+    \min_i \left(y_i(w^T \mathbf{x_i} + b)\right) = 1
+\end{equation}
+
+Now
+\begin{equation}
+    \min_i \left(\frac{|w^T \mathbf{x_i} + b|}{\|w\|}\right) = \frac{1}{\|w\|}
+\end{equation}
+Hence our problem becomes:
+\begin{center}
+    maximize $\frac{1}{\|w\|}$ subject to $\min_i \left(y_i(w^T \mathbf{x_i} + b)\right) = 1$.
+\end{center}
+This can be written another way:
+\begin{center}
+    minimize $\frac{\|w\|^2}{2}$ subject to $y_i(w^T \mathbf{x_i} + b) \geq 1$.
+\end{center}
+
+This optimization problem is convex.
+\end{flushleft}
+
+\subsection*{Relation with SVM}
+
+\begin{flushleft}
+The problem statement given, to find a separating hyperplane that maximizes the margin between the hyperplane and the closest data points, is the fundamental objective of Support Vector Machines (SVMs) for classification.
+
+SVMs aim to find the optimal hyperplane that separates data points of different classes while maximizing the margin between the hyperplane and the nearest data points from each class. This is achieved by formulating the problem as a convex optimization problem, exactly as described in the mathematical formulation section above.
+
+Therefore, the problem statement described is directly related to the core objective of SVMs, making it a fundamental concept in SVM classification.
+\end{flushleft}
+
+\end{document}
