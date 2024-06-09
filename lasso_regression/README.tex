@@ -15,36 +15,39 @@ In regression analysis, feature selection is often crucial for model interpretab
 
 \section*{Mathematical Formulation}
 
-Assume $\mathbf{X}$ is a matrix of feature vectors and $\mathbf{y}$ represents the target values corresponding to these feature vectors. We want to fit a linear model of the form:
+Assume we have a dataset with $n$ observations. Each observation consists of an input vector of features $\mathbf{x}_i$, a target value $y_i$, and potentially a noise term $\sigma_i$. We want to fit a linear model of the form:
 \[
-\hat{\mathbf{y}} = \mathbf{X}\mathbf{w} + b
+\hat{y}_i = \mathbf{w}^T \mathbf{x}_i + b
 \]
-where $\hat{\mathbf{y}}$ is the predicted value, $\mathbf{w}$ is the vector of weights (coefficients), and $b$ is the bias term.
+where $\hat{y}_i$ is the predicted value for the $i^{th}$ observation, $\mathbf{w}$ is the vector of weights (coefficients), $b$ is the bias term, and $\mathbf{w}^T$ denotes the transpose of $\mathbf{w}$.
 
-The error between the predicted values $\hat{\mathbf{y}}$ and the actual values $\mathbf{y}$ can be measured using the residual sum of squares:
+**Important Note:** While the formulation above shows the model for a single observation, Lasso regression typically deals with minimizing the error across all observations in the dataset. However, for a single observation, the summation doesn't strictly apply. 
+
+To calculate the total squared error for all observations, we can use the following:
 \[
-\text{Error} = \|\mathbf{X}\mathbf{w} + b - \mathbf{y}\|
+\text{Error} = \sum_{i=1}^n (\mathbf{w}^T \mathbf{x}_i + b - y_i)^2
 \]
 
-To find the best fit, we minimize the squared error term:
+Here, the summation (Σ) iterates over all $n$ observations, and the squared error for each observation is calculated and summed to get the total error.
+
+To find the best fit, we minimize the average squared error term:
 \[
-\frac{1}{2n} \|\mathbf{X}\mathbf{w} + b - \mathbf{y}\|^2
+\frac{1}{2n} \sum_{i=1}^n (\mathbf{w}^T \mathbf{x}_i + b - y_i)^2
 \]
-where $n$ is the number of observations.
 
-However, if there are non-relevant features present in the data, the model may overfit. To mitigate overfitting and minimize the coefficients corresponding to the non-relevant features, we add a penalizing term, the L1 norm $\|\mathbf{w}\|_1$. Since the L1 norm penalizes smaller coefficients more than the L2 norm (used in Ridge regression), it tends to set the coefficients of non-relevant features to zero, promoting sparsity.
+The rest of the formulation for Lasso regression with L1 regularization and the minimization problem remain the same as before:
 
-Hence, our optimization problem becomes:
 \[
-\text{Minimize} \left( \frac{1}{2n} \|\mathbf{X}\mathbf{w} + b - \mathbf{y}\|^2 + \lambda \|\mathbf{w}\|_1 \right)
+\text{Minimize} \left( \frac{1}{2n} \sum_{i=1}^n (\mathbf{w}^T \mathbf{x}_i + b - y_i)^2 + \lambda \|\mathbf{w}\|_1 \right)
 \]
+
 where $\lambda$ is the regularization parameter that controls the degree of sparsity.
 
 \section*{Summary}
 
-In summary, Lasso regression combines the least squares error with L1 regularization to create a model that not only fits the data well but also promotes sparsity in the coefficients. This helps in identifying the most relevant features, leading to a more interpretable and simplified model. The key equation to minimize is:
+In summary, Lasso regression combines the least squares error with L1 regularization to create a model that not only fits the data well but also promotes sparsity in the coefficients. This helps in identifying the most relevant features, leading to a more interpretable and simplified model. The key equation to minimize, considering multiple observations, is:
 \[
-\frac{1}{2n} \|\mathbf{X}\mathbf{w} + b - \mathbf{y}\|^2 + \lambda \|\mathbf{w}\|_1
+\frac{1}{2n} \sum_{i=1}^n (\mathbf{w}^T \mathbf{x}_i + b - y_i)^2 + \lambda \|\mathbf{w}\|_1
 \]
 This approach effectively balances fitting the data with reducing the complexity of the model.
 

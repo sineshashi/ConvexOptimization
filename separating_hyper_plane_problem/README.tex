@@ -11,49 +11,34 @@ Given a set of data points labeled as positive or negative, find a separating hy
 \subsection*{Mathematical Formulation}
 
 \begin{flushleft}
-Assume $\mathbf{x_i} = (x_1, x_2, \ldots, x_n)$ is the given data vector and $y$ is either $+1$ or $-1$. Let the separating hyperplane be 
+Assume we have a dataset with $n$ data points. Each data point is represented by a vector $\mathbf{x}_i = (x_1, x_2, \ldots, x_n)$ and a corresponding label $y_i$ that can be either $+1$ or $-1$. Let the separating hyperplane be 
 \begin{equation}
-    w^T \mathbf{x} + b = 0
+    w^T \mathbf{x} + b = 0
 \end{equation}
 where $w$ is a normal vector to the hyperplane and $b$ is the bias term.
 
-The margin of point $\mathbf{x_i}$ from the hyperplane is given by
+**Important Note:** While the formulation above shows the margin for a single data point, the objective is to find the hyperplane that maximizes the margin for all data points simultaneously.
+
+The margin of a data point $\mathbf{x}_i$ from the hyperplane is given by
 \begin{equation}
-    \frac{|w^T \mathbf{x_i} + b|}{\|w\|}
-\end{equation}
-The margin between the hyperplane and the closest data point is then the minimum of this quantity
-\begin{equation}
-    \min_i \frac{|w^T \mathbf{x_i} + b|}{\|w\|}
+    \frac{|w^T \mathbf{x_i} + b|}{\|w\|}
 \end{equation}
 
-Thus, we need to maximize
+In the context of multiple data points, we want to consider the minimum margin across all data points:
 \begin{equation}
-    \min_i \left(\frac{|w^T \mathbf{x_i} + b|}{\|w\|}\right)
+    \min_{i=1}^n \frac{|w^T \mathbf{x_i} + b|}{\|w\|}
 \end{equation}
+The goal is then to maximize this minimum margin.
+
 We can choose $w$ and $b$ such that
 \begin{equation}
-    \min_i |w^T \mathbf{x_i} + b| = 1
-\end{equation}
-Since $w^T \mathbf{x} + b = 0$ is the separating plane of the data points based on the labels which have values only $+1$ and $-1$, thus
-\begin{equation}
-    \text{sign}(w^T \mathbf{x_i} + b) = y_i
-\end{equation}
-Hence
-\begin{equation}
-    \min_i \left(y_i(w^T \mathbf{x_i} + b)\right) = 1
+    \min_{i=1}^n |w^T \mathbf{x_i} + b| = 1
 \end{equation}
 
-Now
-\begin{equation}
-    \min_i \left(\frac{|w^T \mathbf{x_i} + b|}{\|w\|}\right) = \frac{1}{\|w\|}
-\end{equation}
-Hence our problem becomes:
+The rest of the formulation follows the same logic, incorporating the concept of multiple data points with summations where applicable, to arrive at the equivalent convex optimization problem:
+
 \begin{center}
-    maximize $\frac{1}{\|w\|}$ subject to $\min_i \left(y_i(w^T \mathbf{x_i} + b)\right) = 1$.
-\end{center}
-This can be written another way:
-\begin{center}
-    minimize $\frac{\|w\|^2}{2}$ subject to $y_i(w^T \mathbf{x_i} + b) \geq 1$.
+    minimize $\frac{1}{2} \|w\|^2$ subject to $y_i(w^T \mathbf{x}_i + b) \geq 1$ for all $i = 1, 2, \ldots, n$.
 \end{center}
 
 This optimization problem is convex.

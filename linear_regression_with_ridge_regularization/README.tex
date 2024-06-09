@@ -14,18 +14,21 @@ Consider a dataset where we aim to predict an outcome based on a set of input fe
 
 \section*{Mathematical Formulation}
 
-Let $\mathbf{x}$ denote the input vector and $\mathbf{y}$ represent the associated target value corresponding to the input vector $\mathbf{x}$ in the training dataset. Assuming a linear relationship, the predicted value $\hat{\mathbf{y}}$ for input vector $\mathbf{x}$ is given by $\hat{\mathbf{y}} = \mathbf{w}^T \mathbf{x} + \mathbf{b}$, where $\mathbf{w}$ is the coefficient vector and $\mathbf{b}$ is the bias vector.
+Let $\mathbf{x}_i$ denote the $i^{th}$ input vector and $y_i$ represent the associated target value corresponding to the input vector $\mathbf{x}_i$ in the training dataset. Assuming a linear relationship, the predicted value $\hat{y}_i$ for input vector $\mathbf{x}_i$ is given by $\hat{y}_i = \mathbf{w}^T \mathbf{x}_i + b$, where $\mathbf{w}$ is the coefficient vector and $b$ is the bias term.
 
-The error between the predicted value $\hat{\mathbf{y}}$ and the actual target value $\mathbf{y}$ for input vector $\mathbf{x}$ can be quantified using the squared difference:
+**Important Note:** While the formulation above shows the model for a single observation, Ridge regression typically deals with minimizing the error across all observations in the dataset. However, for a single observation, the summation doesn't strictly apply. 
 
+To calculate the total squared error for all observations, we can use the following:
 \[
-\text{error} = || \mathbf{w}^T \mathbf{x} + \mathbf{b} - \mathbf{y} ||^2
+\text{Total Error} = \sum_{i=1}^n || \mathbf{w}^T \mathbf{x}_i + b - y_i ||^2
 \]
+
+Here, the summation (Σ) iterates over all $n$ observations, and the squared error for each observation (i) is calculated and summed to get the total error.
 
 The goal is to minimize this error to achieve the best fit for the training data. However, overfitting can occur when the model becomes too complex, leading to poor generalization to unseen data. To address overfitting, Ridge regression is employed, which adds a regularization term to the objective function. The regularized objective function becomes:
 
 \[
-\text{minimize} \, || \mathbf{w}^T \mathbf{x} + \mathbf{b} - \mathbf{y} ||^2 + \lambda || \mathbf{w} ||^2
+\text{minimize} \, \sum_{i=1}^n || \mathbf{w}^T \mathbf{x}_i + b - y_i ||^2 + \lambda || \mathbf{w} ||^2
 \]
 
 where $\lambda$ is the regularization parameter that controls the strength of the penalty. The regularization term $|| \mathbf{w} ||^2$ penalizes large coefficients in the coefficient vector $\mathbf{w}$, thereby encouraging simpler models that generalize better to unseen data.
