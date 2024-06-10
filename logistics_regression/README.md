@@ -1,6 +1,6 @@
 # Problem Statement and mathematical Formulation
 
-All the mathematical details along with the statement can be found in the pdf file [README.pdf](https://github.com/sineshashi/ConvexOptimization/blob/main/logistics_regression/README.pdf) in the same folder.
+All the mathematical details along with the statement can be found in the pdf file [README.pdf](https://github.com/sineshashi/ConvexOptimization/edit/main/logistics_regression/README.) in the same folder.
 
 # How to use?
 
